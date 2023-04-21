@@ -1,6 +1,7 @@
 // npm install --save styled-components
 // emmet snippet: rafce
 
+// npm install --save style-components
 
 import React from 'react';
 import Header from './Header';
