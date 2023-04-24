@@ -3,17 +3,17 @@
         {
             "id": 1,
             "checked": false,
-            "itemName": "Keyboard K1"
+            "item": "Keyboard K1"
         },
         {
             "id": 2,
             "checked": false,
-            "itemName": "Keyboard K12"
+            "item": "Keyboard K12"
         },        
         {
             "id": 3,
             "checked": false,
-            "itemName": "Keyboard K32"
+            "item": "Keyboard K32"
         }
     ]
 }
