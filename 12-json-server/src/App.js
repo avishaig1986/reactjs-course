@@ -14,30 +14,15 @@ import AddItem from "./AddItem";
 import SearchItem from "./SearchItem"
 
 function App() {
-  const API_URL = "http://localhost:3500/items";
+  const [items, setItems] = useState(
+    JSON.parse(localStorage.getItem('shoppingList')) || []);
 
-  const [items, setItems] = useState([]);
   const [newItem, setNewItem] = useState('');
-  const [search, setSearch] = useState('');
-  console.log('items:', items)
+  const [search, setSearch] = useState('')
+
   useEffect(() => {
-    const fetchItems = async () => {
-      try {
-        const response = await fetch(API_URL);
-        const listItems = await response.json();
-        console.log(listItems);
-        setItems(listItems);
-        //console.log(items);
-      
-      } catch (err) {
-        console.log(err.stack);
-
-      }
-    }
-    fetchItems()
-  },  [])
-
- 
+    localStorage.setItem('shoppingList', JSON.stringify(items));}, 
+    [items])
 
   const setAndSaveItems = (newItems) => {
     setItems(newItems);

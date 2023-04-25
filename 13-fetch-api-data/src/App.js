@@ -14,15 +14,34 @@ import AddItem from "./AddItem";
 import SearchItem from "./SearchItem"
 
 function App() {
-  const [items, setItems] = useState(
-    JSON.parse(localStorage.getItem('shoppingList')) || []);
+  const API_URL = "http://localhost:3500/items";
 
+  const [items, setItems] = useState([]);
   const [newItem, setNewItem] = useState('');
-  const [search, setSearch] = useState('')
+  const [search, setSearch] = useState('');
+  const [fetchError, setFetchError] = useState(null);
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    localStorage.setItem('shoppingList', JSON.stringify(items));}, 
-    [items])
+    const fetchItems = async () => {
+      try {
+        const response = await fetch(API_URL);
+        if (!response.ok) throw Error("failed to fetch items!");
+        const listItems = await response.json();
+        setItems(listItems);
+        setFetchError(null)
+      
+      } catch (err) {
+        setFetchError(err.message)
+
+      } finally {
+        setIsLoading(false)
+      }
+    }
+    fetchItems()
+  },  [])
+
+ 
 
   const setAndSaveItems = (newItems) => {
     setItems(newItems);
@@ -57,7 +76,6 @@ function App() {
     e.preventDefault();
     if (!newItem) return;
     addItem(newItem);
-    console.log(newItem)
     setNewItem('');
   }
 
@@ -73,15 +91,20 @@ function App() {
         search={search}
         setSearch={setSearch}
       />
-      <Content
-        items={items.filter(
-          item => ( (item.itemName).toLowerCase().includes(
-            search.toLowerCase()
-            )))
-          }
-        handleCheck={handleCheck}
-        handleDelete={handleDelete}
-      />
+      <main>
+        { fetchError && <p style={{ color: "Red"}}>{`Error: ${fetchError}`}
+        </p>}
+        {!fetchError && <Content
+          items={items.filter(
+            item => ( (item.itemName).toLowerCase().includes(
+              search.toLowerCase()
+              )))
+            }
+          handleCheck={handleCheck}
+          handleDelete={handleDelete}
+       
+        />}
+      </main>
       <Footer length={items.length} />
     </div>
   );
