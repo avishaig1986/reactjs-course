@@ -1,0 +1,14 @@
+{
+  "items": [
+    {
+      "id": 1,
+      "checked": false,
+      "itemName": "Keyboard K1"
+    },
+    {
+      "id": 5,
+      "checked": false,
+      "itemName": "מקלדת K12"
+    }
+  ]
+}

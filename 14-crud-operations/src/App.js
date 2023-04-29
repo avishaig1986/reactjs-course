@@ -12,6 +12,7 @@ import Footer from "./Footer";
 import { useState } from "react";
 import AddItem from "./AddItem";
 import SearchItem from "./SearchItem"
+import apiRequest from "./apiRequest";
 
 function App() {
   const API_URL = "http://localhost:3500/items";
@@ -51,15 +52,25 @@ function App() {
     localStorage.setItem("shoppingList", JSON.stringify(newItems));
   }
 
-  const addItem = (itemName) => {
+  const addItem = async (itemName) => {
     const id = items.length ? items[items.length - 1].id + 1 : 1;
     const AddedNewItem = { id, checked:false, itemName};
     const listItems = [...items, AddedNewItem];
 
     setAndSaveItems(listItems);
+
+    const postOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(AddedNewItem)
+    }
+    const result = await apiRequest(API_URL, postOptions);
+    if (result) setFetchError(result);
   }
 
-  const handleCheck = (id) => {
+  const handleCheck = async (id) => {
     // return opposite boolean https://stackoverflow.com/questions/12772494/how-to-get-opposite-boolean-value-of-variable-in-javascript
 
     const listItems = items.map((item) =>
@@ -67,12 +78,27 @@ function App() {
     );
 
     setAndSaveItems(listItems);
+    const addedItem = listItems.filter((item => item.id === id))
+    const updateOptions = {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({checked: addedItem[0].checked})
+    };
+    const reqUrl = `${API_URL}/${id}`;
+    const result = await apiRequest(reqUrl, updateOptions)
+    if(result) setFetchError(result);
   };
 
-  const handleDelete = (id) => {
-    const listItems = items.filter(item => item.id !== id);
+  const handleDelete = async (id) => {
+    const listItems = items.filter((item => item.id !== id));
     
     setAndSaveItems(listItems);
+    const deleteOptions = { method: 'DELETE'};
+    const reqUrl = `${API_URL}/${id}`
+    const result = await apiRequest(reqUrl, deleteOptions);
+    if (result) setFetchError(result);
     };
 
   const handleSubmit = (e) => {
@@ -97,13 +123,12 @@ function App() {
       <main>
         { fetchError && <p style={{ color: "Red"}}>{`Error: ${fetchError}`}
         </p>}
-        {!fetchError && 
-          <Content
-            items={items.filter(
-              item => ( (item.itemName).toLowerCase().includes(
-                search.toLowerCase()
-                )))
-              }
+        {!fetchError && <Content
+          items={items.filter(
+            item => ( (item.itemName).toLowerCase().includes(
+              search.toLowerCase()
+              )))
+            }
           handleCheck={handleCheck}
           handleDelete={handleDelete}
           isLoading={isLoading}

@@ -6,6 +6,7 @@ import ItemList from "./ItemList";
 // npm install react-icons --save
 
 function Content({ items, handleCheck, handleDelete, isLoading}) {
+  
   return (
     <>
       {items.length ? (

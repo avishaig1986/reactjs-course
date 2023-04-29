@@ -1,0 +1,24 @@
+
+
+body {
+  min-height: 100vh;
+  font-family: "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+    "Droid Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+table {
+  position:absolute;
+  table-layout: fixed;
+  width: 100%;
+  border: 1px solid black;
+  border-collapse: collapse;
+  overflow-x: hidden;
+  border-spacing: 30px;
+  
+}
+
+header {
+  cursor: pointer
+}
