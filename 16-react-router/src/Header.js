@@ -1,9 +1,12 @@
 import React from 'react'
 
+
 const Header = () => {
   return (
     <header>
-        <h1>Header</h1>
+      <div class="p-1 fs-2 fw-bold bg-info text-start">
+        ColorCode Blog
+      </div>
     </header>
   )
 }
