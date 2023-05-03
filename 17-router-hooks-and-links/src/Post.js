@@ -9,7 +9,7 @@ const Post = ({post}) => {
                   to={ `/post/${post.id}`}>
               <h2>{post.title}</h2>
               <small className="postDate">
-                🕑{post.dateTime}
+               🕑 {post.dateTime}
               </small>
             </Link>
             <p className="mt-2">

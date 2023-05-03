@@ -1,11 +1,16 @@
-// npm install --save styled-components
-// emmet snippet: rafce
+/*
 
-// npm install --save style-components
+commands:
 
-// npx json-server -p 3500 -w data/db.json
+   npm install --save styled-components
+   emmet snippet: rafce
+   npm install --save style-components
+   npx json-server -p 3500 -w data/db.json
+   npm i react-router-dom -S
+   npm i date-fns -S
 
-// npm i react-router-dom -S
+*/
+
 import React from 'react';
 import Header from './Header';
 import Nav from './Nav';
@@ -15,6 +20,7 @@ import NewPost from './NewPost';
 import PostPage from './PostPage'
 import About from './About'
 import Missing from './Missing'
+import {format, set} from "date-fns"
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -27,6 +33,10 @@ import { useState, useEffect} from 'react';
 function App() { 
   const [search, setSearch] = useState('')
   const [searchResults, serSearchResults] = useState('')
+
+  const [postTitle, setPostTitle] = useState('')
+  const [postBody, setPostBody] = useState('')
+
   const [posts, setPosts] = useState([
     {
       id: 1,
@@ -61,7 +71,19 @@ const navigate = useNavigate();
 
   }
 
-  
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const id = posts.length ? posts[posts.length -1].id : 1;
+    const dateTime = format(new Date(), "MMMM dd, yyyy pp") ;
+    const newPost = { id: id, title: postTitle, dateTime: dateTime, body: postBody }
+    const allPosts = [...posts, newPost]
+    setPosts(allPosts);
+    setPostTitle('')
+    setPostBody('')
+    navigate('/')
+
+  }
 
   return (
     <div className="App">
@@ -77,7 +99,14 @@ const navigate = useNavigate();
           />
         }/>
         <Route exact path="/post" element={
-          <NewPost />}/>
+          <NewPost 
+                    handleSubmit={handleSubmit}
+                    postTitle={postTitle}
+                    setPostTitle={setPostTitle}
+                    postBody={postBody}
+                    setPostBody={setPostBody}
+                    />
+         }/>
         <Route exact path="/post/:id" element={
           <PostPage posts={posts}
                     handleDelete={handleDelete}/>}/>
