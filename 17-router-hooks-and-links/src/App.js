@@ -32,7 +32,7 @@ import { useState, useEffect} from 'react';
 
 function App() { 
   const [search, setSearch] = useState('')
-  const [searchResults, serSearchResults] = useState('')
+  const [searchResults, setSearchResults] = useState('')
 
   const [postTitle, setPostTitle] = useState('')
   const [postBody, setPostBody] = useState('')
@@ -63,14 +63,25 @@ function App() {
       body: "Curabitur eleifend, justo eu pellentesque sodales, nulla turpis interdum est, a semper diam neque vitae augue. In id vehicula sem. Nam in gravida tellus. Proin malesuada ipsum in luctus accumsan. Integer vehicula odio in orci pretium, vel cursus erat venenatis. Suspendisse lacinia massa vel odio eleifend blandit."
     },
   ])
+
+  useEffect (() =>{
+    const filtetedResults = posts.filter(post => 
+      ((post.body).toLowerCase()).includes(search.toLowerCase())
+      || ((post.title).toLowerCase()).includes(search.toLowerCase()));
+
+      setSearchResults(filtetedResults.reverse());
+
+      
+  },[posts, search])
+
 const navigate = useNavigate();
+
   const handleDelete =(id) => {
     const postsInHandleDelete = posts.filter(post => post.id !== id)
     setPosts(postsInHandleDelete)
     navigate('/')
 
   }
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -95,7 +106,7 @@ const navigate = useNavigate();
       <Routes>
         <Route exact path="/" element={
           <Home 
-            posts={posts}
+            posts={searchResults}
           />
         }/>
         <Route exact path="/post" element={
