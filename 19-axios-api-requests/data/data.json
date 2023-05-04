@@ -1,0 +1,22 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "Blog post title 1",
+      "dateTime": "July 01, 2021 11:00:00 AM",
+      "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla justo mi, mattis at turpis vitae, porttitor aliquet turpis. Duis posuere tortor a nunc ornare sollicitudin. Sed molestie tempor augue, hendrerit pellentesque odio rutrum posuere. Proin viverra nisi neque, quis semper arcu finibus non. Mauris porta ante vel felis posuere venenatis. Maecenas porttitor ornare rutrum. Aliquam congue ante sed neque tempus, eu mattis elit pulvinar. Maecenas semper nulla et sapien maximus auctor sit amet at tellus."
+    },
+    {
+      "id": 2,
+      "title": "Blog post title 2",
+      "dateTime": "April 10, 2022 11:45:00 AM",
+      "body": "Donec vitae ipsum neque. Suspendisse eu ullamcorper tellus. Curabitur id dui nisi. Phasellus ut tincidunt neque. Aliquam dictum, magna et tempor dapibus, ipsum sapien aliquet purus, eu aliquam orci tellus eget ipsum. Praesent dui sem, semper eget nunc in, sagittis fringilla ante. Quisque dui mauris, ultricies non porta sit amet, lobortis quis mi."
+    },
+    {
+      "id": 3,
+      "title": "Blog post title 3",
+      "dateTime": "Match 11, 2019 11:00:00 PM",
+      "body": "Maecenas ut neque sollicitudin felis mattis semper eget vel purus. Nullam libero ligula, vulputate vel orci et, tristique ullamcorper magna. Maecenas id nisi quis ligula ornare tincidunt eget lobortis nunc. Aliquam sed nisi dictum urna semper tristique eget ut leo. Nulla facilisi. Suspendisse potenti. Nunc est metus, tincidunt a ante quis, lobortis tempus lacus. Nullam viverra leo feugiat iaculis facilisis. Curabitur ut odio nulla."
+    }
+  ]
+}

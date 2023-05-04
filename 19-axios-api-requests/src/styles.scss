@@ -1,0 +1,22 @@
+// https://www.youtube.com/watch?v=aPfEEcuTGOg
+// https://5balloons.info/generate-background-color-for-all-available-colors-in-bootstrap-5
+
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables";
+
+$custom-colors:(
+  "royaleorange": rgb(203,140,23)
+);
+
+@each $color, $value in $colors {
+  .bg-#{$color}{
+        background-color: $value !important;
+  }
+
+  .text-#{$color}{
+    color: $value !important;
+  }
+}
+
+@import '../node_modules/bootstrap/scss/bootstrap';
+
