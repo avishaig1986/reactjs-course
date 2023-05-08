@@ -1,6 +1,5 @@
 import {useState, useEffect} from 'react'
 import axios from 'axios';
-import { setDate } from 'date-fns';
 
 const useAxiosFetch = (dataUrl) => {
     const [data, setData] = useState([]);
@@ -9,13 +8,13 @@ const useAxiosFetch = (dataUrl) => {
 
     useEffect(() => {
         let isMounted = true;
-        const source  = axios.CancelToken.source();
+        const controller = new AbortController();
 
         const fetchData = async (url) => {
             setIsLoading(true);
             try{
                 const response = await axios.get(url, {
-                    cacnelToken: source.token
+                    signal: controller.signal
                 });
                 if (isMounted){
                     setData(response.data)
@@ -36,7 +35,7 @@ const useAxiosFetch = (dataUrl) => {
 
         const cleanUp = () => {
             isMounted = false
-            source.cancel();
+            controller.abort()
         }
 
         return cleanUp;

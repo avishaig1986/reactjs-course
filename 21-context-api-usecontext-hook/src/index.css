@@ -1,0 +1,11 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.navBarLink:hover {
+  background-color: whitesmoke !important;
+  color: black !important;
+  
+}
