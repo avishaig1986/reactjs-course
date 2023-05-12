@@ -1,17 +1,24 @@
 import React from "react";
-import { useEffect, useState, useContext } from "react";
+import { useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import api from "./api/posts";
 import { format } from "date-fns";
-import DataContext from "./context/DataContext";
+import { useStoreState, useStoreActions } from 'easy-peasy';
 
 const EditPost = () => {
 
-  const [editTitle, setEditTitle] = useState("");
-  const [editBody, setEditBody] = useState("");
-  const {posts, setPosts} = useContext(DataContext);
+const { id } = useParams();
+  const posts = useStoreState((state) => state.posts);
+  const editTitle = useStoreState((state) => state.editTitle)
+  const editBody = useStoreState((state) => state.editBody)
+
+  //const savePost = useStoreActions((actions) => actions.savePost)
+  const setEditTitle = useStoreActions((actions) => actions.setEditTitle)
+  const setEditBody = useStoreActions((actions) => actions.setEditBody)
+  const editPost = useStoreActions((actions) => actions.editPost)
+
+
   const navigate = useNavigate();
-  const { id } = useParams();
+  
   const post = posts.find((post) => post.id.toString() === id);
 
   useEffect(() => {
@@ -21,7 +28,7 @@ const EditPost = () => {
     }
   }, [post, setEditTitle, setEditBody]);
 
-  const handleEdit = async (id) => {
+  const handleEdit = (id) => {
     const dateTime = format(new Date(), "MMMM dd, yyyy pp");
     const updatedPost = {
       id: id,
@@ -29,17 +36,9 @@ const EditPost = () => {
       dateTime: dateTime,
       body: editBody,
     };
-    try {
-      const response = await api.put(`/posts/${id}`, updatedPost);
-      setPosts(
-        posts.map((post) => (post.id === id ? { ...response.data } : post))
-      );
-      setEditTitle("");
-      setEditBody("");
-      navigate("/");
-    } catch (err) {
-      console.log(`Error: failed to edit ${err.message}`);
-    }
+    editPost(updatedPost)
+    navigate(`/post/${id}`);
+
   };
 
   return (
